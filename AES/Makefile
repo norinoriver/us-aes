@@ -1,4 +1,4 @@
-CC = g++
+CC = g++ -std=c++11
 WW = -W -Wall
 OPZ = -O2
 
@@ -14,7 +14,7 @@ OBJS = $(patsubst %.cpp,%.o,$(SOURCES))
 DIRS = $(shell find $(SRC_DIR) $(LIB_DIR) -type d)
 INCDIR = $(addprefix -I,$(DIRS))
 
-.PHONY: all clean $(PRJ_NAME)
+.PHONY: all clean $(PRJ_NAME) create
 
 all: ;
 
@@ -24,9 +24,10 @@ $(PRJ_NAME): $(OBJS)
 %.o: %.cpp
 		@$(CC) $^ $(WW) $(OPZ) $(INCDIR) -o $@ -c -g
 
-test: 
-	@echo $(BIN_DIR)$(PRJ_NAME)
+create: clean $(PRJ_NAME)
+	@$(BIN_DIR)$(PRJ_NAME)
+
 
 clean:
-		rm -f $(OBJS)
-		rm -f $(BIN_DIR)$(PRJ_NAME)
+		@rm -f $(OBJS)
+		@rm -f $(BIN_DIR)$(PRJ_NAME)
